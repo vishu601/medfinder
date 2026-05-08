@@ -150,11 +150,16 @@ def medical_reg(request):
 
 def show_admins(request):
     if request.session.has_key("usertype"):
-            ut = request.session["usertype"]
-            if ut=="admin":
-                data=admindata.objects.all()
-                return render(request,"ShowAdmins.html",{"records":data})
-
+        ut = request.session["usertype"]
+        if ut == "admin":
+            data = admindata.objects.all()
+            return render(request, "ShowAdmins.html", {"records": data})
+        else:
+            # Agar user admin nahi hai toh use home ya login par bhejo
+            return redirect("login") 
+    
+    # Agar session hi nahi hai (user login nahi hai)
+    return redirect("login")
 
 
 
